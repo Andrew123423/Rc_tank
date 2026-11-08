@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+import json,math,time
+from pathlib import Path
+import rclpy
+from rclpy.node import Node
+from rclpy.qos import qos_profile_sensor_data
+from ament_index_python.packages import get_package_share_directory
+from geometry_msgs.msg import PoseArray,TransformStamped,Point
+from sensor_msgs.msg import CameraInfo,JointState,LaserScan
+from std_msgs.msg import String,ColorRGBA
+from nav_msgs.msg import Odometry
+from visualization_msgs.msg import Marker,MarkerArray
+from tf2_ros import TransformBroadcaster
+from rc_tank_sim.model import belt_path
+from rc_tank_sim.visual_geometry import shoe_triangles,scan_segments
+
+class Visualizer(Node):
+    def __init__(self):
+        super().__init__('tank_visualizer')
+        default=str(Path(get_package_share_directory('rc_tank_sim'))/'config/robot.json')
+        self.c=json.loads(Path(self.declare_parameter('config',default).value).read_text())
+        self.standalone=self.declare_parameter('standalone',False).value
+        self.profile=self.declare_parameter('profile','light').value
+        self.last_tracks=-1.;self.last_led=-1.;self.last_rays=-1.
+        self.show_rays=self.declare_parameter('show_lidar_rays',True).value
+        self.ray_pub=self.create_publisher(Marker,'/tank/lidar_rays',1)
+        if self.show_rays:self.create_subscription(LaserScan,'/scan',self.scan,qos_profile_sensor_data)
+        self.track_pub=self.create_publisher(MarkerArray,'/tank/track_markers',1)
+        self.led_pub=self.create_publisher(MarkerArray,'/tank/light_markers',1)
+        self.create_subscription(String,'/tank/led_colors',self.lights,10)
+        self.create_subscription(PoseArray,'/tank/shoe_poses',self.shoes,1)
+        self.info_pubs={s:self.create_publisher(CameraInfo,f'/camera/{s}/camera_info',10) for s in ('left','right')}
+        self.info_subs=[self.create_subscription(CameraInfo,f'/camera/{s}/camera_info_raw',lambda m,side=s:self.camera_info(m,side),qos_profile_sensor_data) for s in ('left','right')]
+        self.x=self.y=self.theta=0.;self.duties=[0.,0.];self.ratio=self.c['gear_low'];self.last_status=-1.;self.last_time=self.get_clock().now();self.phases={}
+        if self.standalone:
+            self.js=self.create_publisher(JointState,'/joint_states',10);self.odom=self.create_publisher(Odometry,'/odom',10);self.tf=TransformBroadcaster(self)
+            self.create_subscription(String,'/tank/status',self.status,10)
+            self.create_timer(1/30,self.integrate)
+    def camera_info(self,m,side):
+        m.header.frame_id=f'camera_{side}_optical_frame'
+        # Ideal rectified pair, common intrinsics. Right P[0,3] = -fx * baseline.
+        m.p[3]=-m.p[0]*self.c['stereo_baseline'] if side=='right' else 0.
+        self.info_pubs[side].publish(m)
+    def lights(self,m):
+        now=time.monotonic()
+        if len(m.data)!=144 or now-self.last_led<.049:return
+        try:rgb=[tuple(int(m.data[i+j:i+j+2],16)/255 for j in (0,2,4)) for i in range(0,144,6)]
+        except ValueError:return
+        self.last_led=now;mk=Marker();mk.header.frame_id='base_link';mk.header.stamp=self.get_clock().now().to_msg()
+        mk.ns='led';mk.id=0;mk.type=Marker.CUBE_LIST;mk.action=Marker.ADD;mk.pose.orientation.w=1.
+        mk.scale.x=.004;mk.scale.y=.010;mk.scale.z=.008;mk.color.a=1.;mk.frame_locked=True
+        for i,color in enumerate(rgb):
+            if i<18:x,y=.269,.1275-i*.015
+            else:x,y=-.266,(.105 if i<21 else -.105)+(i%3-1)*.012
+            mk.points.append(Point(x=x,y=y,z=.009));mk.colors.append(ColorRGBA(r=color[0],g=color[1],b=color[2],a=1.))
+        self.led_pub.publish(MarkerArray(markers=[mk]))
+    def shoes(self,m):
+        now=time.monotonic()
+        if now-self.last_tracks<.099:return
+        self.last_tracks=now;mk=Marker();mk.header=m.header;mk.header.frame_id='base_link'
+        mk.ns='shoes';mk.id=0;mk.type=Marker.TRIANGLE_LIST;mk.action=Marker.ADD;mk.pose.orientation.w=1.
+        mk.scale.x=mk.scale.y=mk.scale.z=1.;mk.color.r=.08;mk.color.g=.09;mk.color.b=.11;mk.color.a=1.;mk.frame_locked=True
+        for p in m.poses:
+            v=p.position;q=p.orientation
+            for x,y,z in shoe_triangles((v.x,v.y,v.z),(q.x,q.y,q.z,q.w),self.c['track_width']):mk.points.append(Point(x=x,y=y,z=z))
+        self.track_pub.publish(MarkerArray(markers=[mk]))
+    def scan(self,m):
+        now=time.monotonic()
+        if now-self.last_rays<.099:return
+        self.last_rays=now;mk=Marker();mk.header=m.header;mk.ns='lidar_rays';mk.id=0;mk.type=Marker.LINE_LIST;mk.action=Marker.ADD
+        mk.pose.orientation.w=1.;mk.scale.x=.006;mk.color.r=.05;mk.color.g=.9;mk.color.b=1.;mk.color.a=.42
+        # Use timestamped TF, as LaserScan does. No synthetic points for Inf readings.
+        mk.lifetime.sec=1
+        for start,end in scan_segments(m.ranges,m.angle_min,m.angle_increment,m.range_min,m.range_max):
+            for x,y,z in (start,end):mk.points.append(Point(x=x,y=y,z=z))
+        self.ray_pub.publish(mk)
+    def status(self,m):
+        try:
+            s=json.loads(m.data);self.duties=[s['left_duty'],s['right_duty']];self.ratio=s['ratio'];self.last_status=self.get_clock().now().nanoseconds()/1e9;self.servo=s['servo_deg']*math.pi/180
+        except (ValueError,KeyError):return
+    def integrate(self):
+        now=self.get_clock().now();t=now.nanoseconds/1e9;dt=(now-self.last_time).nanoseconds/1e9;self.last_time=now
+        if dt<=0 or dt>.5:return
+        c=self.c;omega=c['motor_rpm']*2*math.pi/60/self.ratio;duties=self.duties if 0<=t-self.last_status<c['command_timeout'] else (0.,0.)
+        l,r=[d*omega*c['sprocket_radius'] for d in duties];v=(l+r)/2;w=(r-l)/c['track_separation']
+        mid=self.theta+w*dt/2;self.x+=v*math.cos(mid)*dt;self.y+=v*math.sin(mid)*dt;self.theta+=w*dt
+        tf=TransformStamped();tf.header.stamp=now.to_msg();tf.header.frame_id='odom';tf.child_frame_id='base_link';tf.transform.translation.x=self.x;tf.transform.translation.y=self.y;tf.transform.translation.z=.10;tf.transform.rotation.z=math.sin(self.theta/2);tf.transform.rotation.w=math.cos(self.theta/2);self.tf.sendTransform(tf)
+        od=Odometry();od.header=tf.header;od.child_frame_id='base_link';od.pose.pose.position.x=self.x;od.pose.pose.position.y=self.y;od.pose.pose.position.z=.10;od.pose.pose.orientation=tf.transform.rotation;od.twist.twist.linear.x=v;od.twist.twist.angular.z=w;self.odom.publish(od)
+        js=JointState();js.header.stamp=now.to_msg()
+        for side,duty in zip(('left','right'),duties):
+            for name,rr in [(f'{side}_sprocket',c['sprocket_radius']),(f'{side}_idler',c['sprocket_radius'])]+[(f'{side}_road_{i}_{j}',.0225) for i in range(3) for j in range(2)]+[(f'{side}_return_{i}',.015) for i in range(2)]:
+                name+='_joint';self.phases[name]=self.phases.get(name,0.)+duty*omega*c['sprocket_radius']/rr*dt;js.name.append(name);js.position.append(self.phases[name])
+            if self.profile=='detailed':
+                for i in range(3):
+                    for key in (f'{side}_suspension_{i}_joint',f'{side}_bogie_{i}_joint'):js.name.append(key);js.position.append(0.)
+                js.name.append(f'{side}_tensioner_joint');js.position.append(0.)
+        js.name.append('shift_servo_joint');js.position.append(getattr(self,'servo',40*math.pi/180));self.js.publish(js)
+        if self.profile=='detailed':
+            poses=PoseArray();poses.header.frame_id='base_link';poses.header.stamp=now.to_msg()
+            from geometry_msgs.msg import Pose
+            for sign in (1,-1):
+                for x,z,a in belt_path(c):
+                    p=Pose();p.position.x=x;p.position.y=sign*c['track_separation']/2;p.position.z=z;p.orientation.y=math.sin(a/2);p.orientation.w=math.cos(a/2);poses.poses.append(p)
+            self.shoes(poses)
+
+def main():
+    rclpy.init();n=Visualizer()
+    try:rclpy.spin(n)
+    except KeyboardInterrupt:pass
+    finally:n.destroy_node();rclpy.shutdown()
+if __name__=='__main__':main()

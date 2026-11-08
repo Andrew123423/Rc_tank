@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""Focused Tk window with simultaneous key press/release support under WSLg."""
+import sys,time
+import rclpy
+from geometry_msgs.msg import Vector3
+from std_msgs.msg import UInt8
+from rc_tank_sim.teleop_state import KeyState
+
+def main():
+    try:import tkinter as tk
+    except ImportError:raise SystemExit('Установите GUI-модуль: sudo apt install python3-tk')
+    rclpy.init();node=rclpy.create_node('tank_keyboard')
+    state=KeyState(float(node.declare_parameter('speed',.35).value))
+    rc=node.create_publisher(Vector3,'/tank/rc_input',1)
+    gp=node.create_publisher(UInt8,'/tank/gear',1);lp=node.create_publisher(UInt8,'/tank/lights',1)
+    try:root=tk.Tk()
+    except tk.TclError as e:
+        node.destroy_node();rclpy.shutdown();raise SystemExit(f'Нет доступа к WSLg/X11: {e}\nПроверьте DISPLAY и WSLg; GUI нужен для одновременных клавиш.')
+    root.title('RC Tank · управление');root.geometry('560x330');root.configure(bg='#162232')
+    focused=False;closing=False;pending={}
+    tk.Label(root,text='W / A / S / D  ·  стрелки',font=('Sans',20,'bold'),fg='white',bg='#162232').pack(pady=(22,8))
+    tk.Label(root,text='Удерживайте W+D — вперёд и вправо\nW+A — вперёд и влево; A/D — разворот\nПробел / Esc — стоп; 1/2 — передача\nF — свет; 0/B/N/M/P — режим; +/− — мощность',font=('Sans',12),fg='#d4deeb',bg='#162232',justify='left').pack()
+    info=tk.StringVar();tk.Label(root,textvariable=info,font=('Sans',12,'bold'),fg='#55e5bd',bg='#162232').pack(pady=15)
+    tk.Label(root,text='Кликните в окно. Потеря фокуса останавливает робот.',fg='#acbcd0',bg='#162232').pack()
+    def focus_in(event):
+        nonlocal focused
+        focused=True
+    def stop(event=None):
+        nonlocal focused
+        focused=False;state.clear(block=True);rc.publish(Vector3())
+        for job in pending.values():root.after_cancel(job)
+        pending.clear()
+    def press(event):
+        if not focused:return
+        key=state.normalise(event.keysym)
+        if key in pending:root.after_cancel(pending.pop(key))
+        state.press(key)
+    def release(event):
+        key=state.normalise(event.keysym)
+        if key in pending:root.after_cancel(pending.pop(key))
+        # X11 auto-repeat may send release/press pairs; defer until the event queue drains.
+        def finish():pending.pop(key,None);state.release(key)
+        pending[key]=root.after_idle(finish)
+    def close():
+        nonlocal closing
+        if closing:return
+        closing=True;stop()
+        for _ in range(3):rc.publish(Vector3())
+        root.destroy()
+    def publish():
+        if closing:return
+        if not rclpy.ok():close();return
+        v,w=state.command() if focused else (0.,0.)
+        rc.publish(Vector3(x=v,y=w));gp.publish(UInt8(data=state.gear));lp.publish(UInt8(data=state.light))
+        info.set(f'{"АКТИВНО" if focused else "СТОП · нет фокуса"}   газ {v:+.2f}   поворот {w:+.2f}\nПередача {state.gear} · свет {state.light} · мощность {state.speed:.0%}')
+        rclpy.spin_once(node,timeout_sec=0);root.after(33,publish)
+    root.bind('<FocusIn>',focus_in);root.bind('<FocusOut>',stop);root.bind('<KeyPress>',press);root.bind('<KeyRelease>',release)
+    root.protocol('WM_DELETE_WINDOW',close)
+    print('Открылось окно управления: сочетания W+D/W+A, отпускание клавиш и остановка при потере фокуса.')
+    root.after(33,publish)
+    try:root.mainloop()
+    except KeyboardInterrupt:close()
+    finally:
+        state.clear()
+        if rclpy.ok():rc.publish(Vector3());node.destroy_node();rclpy.shutdown()
+if __name__=='__main__':main()

@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+"""Live acceptance check for the simulator. Run after sim.launch.py."""
+import argparse,json,math,time
+import rclpy
+from rclpy.qos import qos_profile_sensor_data
+from geometry_msgs.msg import Twist,PoseArray
+from nav_msgs.msg import Odometry
+from sensor_msgs.msg import Image,CameraInfo,LaserScan,JointState
+from std_msgs.msg import String,Float64
+
+def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--timeout',type=float,default=45);ap.add_argument('--no-sensors',action='store_true');ap.add_argument('--cameras',action='store_true');ap.add_argument('--drive-test',action='store_true');ap.add_argument('--detailed',action='store_true');args,rosargs=ap.parse_known_args()
+    rclpy.init(args=rosargs);node=rclpy.create_node('tank_smoke_check');data={};counts={};subs=[]
+    def cb(key):
+        def receive(m):data[key]=m;counts[key]=counts.get(key,0)+1
+        return receive
+    topics=[('odom',Odometry,'/odom'),('joints',JointState,'/joint_states'),('status',String,'/tank/status')]
+    if not args.no_sensors:
+        topics += [('scan',LaserScan,'/scan')]
+        if args.cameras:topics += [('left',Image,'/camera/left/image_raw'),('right',Image,'/camera/right/image_raw'),('left_info',CameraInfo,'/camera/left/camera_info'),('right_info',CameraInfo,'/camera/right/camera_info')]
+    if args.detailed:topics += [('shoes',PoseArray,'/tank/shoe_poses'),('closure',Float64,'/tank/closure_error')]
+    for key,cls,topic in topics:subs.append(node.create_subscription(cls,topic,cb(key),qos_profile_sensor_data))
+    deadline=time.monotonic()+args.timeout
+    while time.monotonic()<deadline and any(counts.get(k,0)<2 for k,_,_ in topics):rclpy.spin_once(node,timeout_sec=.1)
+    failures=[]
+    for key,_,topic in topics:
+        if counts.get(key,0)<2:failures.append('Нет потока '+topic)
+    if 'odom' in data:
+        p=data['odom'].pose.pose.position
+        if not all(math.isfinite(v) for v in (p.x,p.y,p.z)):failures.append('Одометрия содержит NaN/Inf')
+    if 'scan' in data:
+        m=data['scan']
+        if len(m.ranges)<100 or m.header.frame_id!='lidar_link':failures.append('Неверный LaserScan / frame_id')
+    for side in ('left','right'):
+        if side in data:
+            m=data[side]
+            if not m.data or m.width<2 or m.header.frame_id!=f'camera_{side}_optical_frame':failures.append('Неверное изображение '+side)
+    if 'right_info' in data:
+        p=data['right_info'].p
+        if p[0]<=0 or p[3]>=0:failures.append('Не задана стереобаза правой CameraInfo')
+    if args.detailed and 'shoes' in data:
+        if len(data['shoes'].poses)!=214:failures.append('Ожидалось 214 физических звеньев')
+    if 'closure' in data:
+        e=data['closure'].data
+        if not math.isfinite(e) or e>.02:failures.append('Ошибка замыкания гусеницы превышает 20 мм')
+    if args.drive_test:
+        if 'odom' not in data:failures.append('Нельзя проверить движение без одометрии')
+        else:
+            pub=node.create_publisher(Twist,'/cmd_vel',10);start=data['odom'].pose.pose.position;x0,y0=start.x,start.y
+            wall_end=time.monotonic()+args.timeout
+            # Use received odometry timestamps, not this checker's wall clock.
+            def stamp(m):return m.header.stamp.sec+m.header.stamp.nanosec*1e-9
+            t0=stamp(data['odom']);last_send=0
+            try:
+                while time.monotonic()<wall_end and stamp(data['odom'])-t0<2.0:
+                    if time.monotonic()-last_send>.04:
+                        m=Twist();m.linear.x=.15;pub.publish(m);last_send=time.monotonic()
+                    rclpy.spin_once(node,timeout_sec=.02)
+            finally:pub.publish(Twist())
+            if stamp(data['odom'])-t0<1.8:failures.append('Не набралось 2 секунды модельного времени; увеличьте --timeout')
+            end=data['odom'].pose.pose.position
+            if math.hypot(end.x-x0,end.y-y0)<.03:failures.append('Нет ожидаемого движения вперёд')
+            until=time.monotonic()+1
+            while time.monotonic()<until:rclpy.spin_once(node,timeout_sec=.05)
+            if 'status' in data:
+                st=json.loads(data['status'].data)
+                if abs(st['left_duty'])>1e-6 or abs(st['right_duty'])>1e-6 or not st['watchdog']:failures.append('Watchdog не остановил привод')
+    print(json.dumps({'result':'FAIL' if failures else 'PASS','received_counts':counts,'failures':failures},ensure_ascii=False,indent=2))
+    node.destroy_node();rclpy.shutdown();raise SystemExit(bool(failures))
+if __name__=='__main__':main()

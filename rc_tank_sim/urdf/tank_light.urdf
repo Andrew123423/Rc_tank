@@ -1,0 +1,1203 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="rc_tank">
+  <link name="base_link">
+    <inertial>
+      <mass value="6.0" />
+      <inertia ixx="0.045508999999999994" iyy="0.14477450000000003" izz="0.1816345" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <collision>
+      <origin xyz="0 0 0.0035" rpy="0 0 0" />
+      <geometry>
+        <box size="0.53 0.275 0.086" />
+      </geometry>
+    </collision>
+    <visual>
+      <geometry>
+        <mesh filename="package://rc_tank_sim/meshes/body_proxy.stl" />
+      </geometry>
+      <material name="body_proxy">
+        <color rgba=".12 .14 .17 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 0.1275 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_4">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 0.1125 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_5">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 0.0975 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_6">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 0.0825 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_7">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 0.0675 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_8">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 0.0525 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_9">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 0.0375 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_10">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 0.0225 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_11">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 0.0075 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_12">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 -0.0075 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_13">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 -0.0225 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_14">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 -0.0375 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_15">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 -0.0525 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_16">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 -0.0675 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_17">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 -0.0825 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_18">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 -0.0975 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_19">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 -0.1125 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_20">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="0.269 -0.1275 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_21">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="-0.266 0.093 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_22">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="-0.266 0.105 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_23">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="-0.266 0.117 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_24">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="-0.266 -0.117 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_25">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="-0.266 -0.105 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_26">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+    <visual>
+      <origin xyz="-0.266 -0.093 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.003 0.009 0.007" />
+      </geometry>
+      <material name="material_27">
+        <color rgba="0.02 0.02 0.02 1" />
+      </material>
+    </visual>
+  </link>
+  <link name="left_belt">
+    <inertial>
+      <mass value="0.3" />
+      <inertia ixx="0.00018409169" iyy="0.00762206938" izz="0.00756297769" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.478 0.05 0.06974" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.08 0.09 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.478 0.05 0.06974" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.239 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.03487" length="0.05" />
+      </geometry>
+      <material name="material_4">
+        <color rgba="0.08 0.09 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.239 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.03487" length="0.05" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.239 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.03487" length="0.05" />
+      </geometry>
+      <material name="material_6">
+        <color rgba="0.08 0.09 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.239 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.03487" length="0.05" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_belt_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="left_belt" />
+    <origin xyz="0 0.1735 -0.05" rpy="0 0 0" />
+  </joint>
+  <link name="left_suspension_0">
+    <inertial>
+      <mass value="0.09" />
+      <inertia ixx="3.6074999999999993e-06" iyy="2.86875e-05" izz="2.892e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.055 0.016 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.3 0.3 0.32 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_suspension_0_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="left_suspension_0" />
+    <origin xyz="0.155 0.1735 -0.06037" rpy="0 0 0" />
+  </joint>
+  <link name="left_bogie_0">
+    <inertial>
+      <mass value="0.06" />
+      <inertia ixx="2.34e-06" iyy="1.53e-05" izz="1.6199999999999997e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.054 0.018 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.4 0.4 0.4 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_bogie_0_joint" type="fixed">
+    <parent link="left_suspension_0" />
+    <child link="left_bogie_0" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="left_road_0_0">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_road_0_0_joint" type="continuous">
+    <parent link="left_bogie_0" />
+    <child link="left_road_0_0" />
+    <origin xyz="-0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="left_road_0_1">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_road_0_1_joint" type="continuous">
+    <parent link="left_bogie_0" />
+    <child link="left_road_0_1" />
+    <origin xyz="0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="left_suspension_1">
+    <inertial>
+      <mass value="0.09" />
+      <inertia ixx="3.6074999999999993e-06" iyy="2.86875e-05" izz="2.892e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.055 0.016 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.3 0.3 0.32 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_suspension_1_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="left_suspension_1" />
+    <origin xyz="0 0.1735 -0.06037" rpy="0 0 0" />
+  </joint>
+  <link name="left_bogie_1">
+    <inertial>
+      <mass value="0.06" />
+      <inertia ixx="2.34e-06" iyy="1.53e-05" izz="1.6199999999999997e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.054 0.018 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.4 0.4 0.4 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_bogie_1_joint" type="fixed">
+    <parent link="left_suspension_1" />
+    <child link="left_bogie_1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="left_road_1_0">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_road_1_0_joint" type="continuous">
+    <parent link="left_bogie_1" />
+    <child link="left_road_1_0" />
+    <origin xyz="-0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="left_road_1_1">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_road_1_1_joint" type="continuous">
+    <parent link="left_bogie_1" />
+    <child link="left_road_1_1" />
+    <origin xyz="0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="left_suspension_2">
+    <inertial>
+      <mass value="0.09" />
+      <inertia ixx="3.6074999999999993e-06" iyy="2.86875e-05" izz="2.892e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.055 0.016 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.3 0.3 0.32 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_suspension_2_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="left_suspension_2" />
+    <origin xyz="-0.155 0.1735 -0.06037" rpy="0 0 0" />
+  </joint>
+  <link name="left_bogie_2">
+    <inertial>
+      <mass value="0.06" />
+      <inertia ixx="2.34e-06" iyy="1.53e-05" izz="1.6199999999999997e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.054 0.018 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.4 0.4 0.4 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_bogie_2_joint" type="fixed">
+    <parent link="left_suspension_2" />
+    <child link="left_bogie_2" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="left_road_2_0">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_road_2_0_joint" type="continuous">
+    <parent link="left_bogie_2" />
+    <child link="left_road_2_0" />
+    <origin xyz="-0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="left_road_2_1">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_road_2_1_joint" type="continuous">
+    <parent link="left_bogie_2" />
+    <child link="left_road_2_1" />
+    <origin xyz="0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="left_sprocket">
+    <inertial>
+      <mass value="0.12" />
+      <inertia ixx="6.463667599999999e-05" iyy="9.727335199999999e-05" izz="6.463667599999999e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.032369999999999996" length="0.04" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.24 0.24 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_sprocket_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="left_sprocket" />
+    <origin xyz="-0.239 0.1735 -0.05" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="left_idler">
+    <inertial>
+      <mass value="0.12" />
+      <inertia ixx="6.463667599999999e-05" iyy="9.727335199999999e-05" izz="6.463667599999999e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.032369999999999996" length="0.04" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.24 0.24 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_idler_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="left_idler" />
+    <origin xyz="0.239 0.1735 -0.05" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="left_return_0">
+    <inertial>
+      <mass value="0.035" />
+      <inertia ixx="3.960716666666667e-06" iyy="5.25e-06" izz="3.960716666666667e-06" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.015" length="0.0214" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.08 0.09 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_return_0_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="left_return_0" />
+    <origin xyz="0.12 0.1735 -0.03387" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="left_return_1">
+    <inertial>
+      <mass value="0.035" />
+      <inertia ixx="3.960716666666667e-06" iyy="5.25e-06" izz="3.960716666666667e-06" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.015" length="0.0214" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.08 0.09 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_return_1_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="left_return_1" />
+    <origin xyz="-0.12 0.1735 -0.03387" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="right_belt">
+    <inertial>
+      <mass value="0.3" />
+      <inertia ixx="0.00018409169" iyy="0.00762206938" izz="0.00756297769" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.478 0.05 0.06974" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.08 0.09 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.478 0.05 0.06974" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="-0.239 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.03487" length="0.05" />
+      </geometry>
+      <material name="material_4">
+        <color rgba="0.08 0.09 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.239 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.03487" length="0.05" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0.239 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.03487" length="0.05" />
+      </geometry>
+      <material name="material_6">
+        <color rgba="0.08 0.09 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.239 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.03487" length="0.05" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_belt_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="right_belt" />
+    <origin xyz="0 -0.1735 -0.05" rpy="0 0 0" />
+  </joint>
+  <link name="right_suspension_0">
+    <inertial>
+      <mass value="0.09" />
+      <inertia ixx="3.6074999999999993e-06" iyy="2.86875e-05" izz="2.892e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.055 0.016 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.3 0.3 0.32 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_suspension_0_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="right_suspension_0" />
+    <origin xyz="0.155 -0.1735 -0.06037" rpy="0 0 0" />
+  </joint>
+  <link name="right_bogie_0">
+    <inertial>
+      <mass value="0.06" />
+      <inertia ixx="2.34e-06" iyy="1.53e-05" izz="1.6199999999999997e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.054 0.018 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.4 0.4 0.4 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_bogie_0_joint" type="fixed">
+    <parent link="right_suspension_0" />
+    <child link="right_bogie_0" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="right_road_0_0">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_road_0_0_joint" type="continuous">
+    <parent link="right_bogie_0" />
+    <child link="right_road_0_0" />
+    <origin xyz="-0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="right_road_0_1">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_road_0_1_joint" type="continuous">
+    <parent link="right_bogie_0" />
+    <child link="right_road_0_1" />
+    <origin xyz="0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="right_suspension_1">
+    <inertial>
+      <mass value="0.09" />
+      <inertia ixx="3.6074999999999993e-06" iyy="2.86875e-05" izz="2.892e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.055 0.016 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.3 0.3 0.32 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_suspension_1_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="right_suspension_1" />
+    <origin xyz="0 -0.1735 -0.06037" rpy="0 0 0" />
+  </joint>
+  <link name="right_bogie_1">
+    <inertial>
+      <mass value="0.06" />
+      <inertia ixx="2.34e-06" iyy="1.53e-05" izz="1.6199999999999997e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.054 0.018 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.4 0.4 0.4 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_bogie_1_joint" type="fixed">
+    <parent link="right_suspension_1" />
+    <child link="right_bogie_1" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="right_road_1_0">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_road_1_0_joint" type="continuous">
+    <parent link="right_bogie_1" />
+    <child link="right_road_1_0" />
+    <origin xyz="-0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="right_road_1_1">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_road_1_1_joint" type="continuous">
+    <parent link="right_bogie_1" />
+    <child link="right_road_1_1" />
+    <origin xyz="0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="right_suspension_2">
+    <inertial>
+      <mass value="0.09" />
+      <inertia ixx="3.6074999999999993e-06" iyy="2.86875e-05" izz="2.892e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.055 0.016 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.3 0.3 0.32 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_suspension_2_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="right_suspension_2" />
+    <origin xyz="-0.155 -0.1735 -0.06037" rpy="0 0 0" />
+  </joint>
+  <link name="right_bogie_2">
+    <inertial>
+      <mass value="0.06" />
+      <inertia ixx="2.34e-06" iyy="1.53e-05" izz="1.6199999999999997e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.054 0.018 0.012" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.4 0.4 0.4 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_bogie_2_joint" type="fixed">
+    <parent link="right_suspension_2" />
+    <child link="right_bogie_2" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="right_road_2_0">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_road_2_0_joint" type="continuous">
+    <parent link="right_bogie_2" />
+    <child link="right_road_2_0" />
+    <origin xyz="-0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="right_road_2_1">
+    <inertial>
+      <mass value="0.055" />
+      <inertia ixx="1.2009983333333334e-05" iyy="1.85625e-05" izz="1.2009983333333334e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.0225" length="0.0244" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.18 0.18 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_road_2_1_joint" type="continuous">
+    <parent link="right_bogie_2" />
+    <child link="right_road_2_1" />
+    <origin xyz="0.027 0 0" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="right_sprocket">
+    <inertial>
+      <mass value="0.12" />
+      <inertia ixx="6.463667599999999e-05" iyy="9.727335199999999e-05" izz="6.463667599999999e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.032369999999999996" length="0.04" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.24 0.24 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_sprocket_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="right_sprocket" />
+    <origin xyz="-0.239 -0.1735 -0.05" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="right_idler">
+    <inertial>
+      <mass value="0.12" />
+      <inertia ixx="6.463667599999999e-05" iyy="9.727335199999999e-05" izz="6.463667599999999e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.032369999999999996" length="0.04" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.24 0.24 0.26 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_idler_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="right_idler" />
+    <origin xyz="0.239 -0.1735 -0.05" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="right_return_0">
+    <inertial>
+      <mass value="0.035" />
+      <inertia ixx="3.960716666666667e-06" iyy="5.25e-06" izz="3.960716666666667e-06" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.015" length="0.0214" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.08 0.09 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_return_0_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="right_return_0" />
+    <origin xyz="0.12 -0.1735 -0.03387" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="right_return_1">
+    <inertial>
+      <mass value="0.035" />
+      <inertia ixx="3.960716666666667e-06" iyy="5.25e-06" izz="3.960716666666667e-06" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="1.57079633 0 0" />
+      <geometry>
+        <cylinder radius="0.015" length="0.0214" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.08 0.09 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_return_1_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="right_return_1" />
+    <origin xyz="-0.12 -0.1735 -0.03387" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-1e+16" upper="1e+16" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="shift_servo">
+    <inertial>
+      <mass value="0.02" />
+      <inertia ixx="1.2816666666666667e-06" iyy="9.066666666666667e-07" izz="1.7083333333333336e-06" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0.0125 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.006 0.006" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.8 0.4 0.1 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="shift_servo_joint" type="revolute">
+    <parent link="base_link" />
+    <child link="shift_servo" />
+    <origin xyz="0 0 0.025" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="3.141592653589793" effort="20" velocity="1000" />
+    <dynamics damping="0.05" />
+  </joint>
+  <link name="stereo_mount">
+    <inertial>
+      <mass value="0.075" />
+      <inertia ixx="6.03125e-05" iyy="7.812500000000002e-06" izz="6.03125e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.095 0.025" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.6 0.62 0.65 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.095 0.025" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="stereo_mount_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="stereo_mount" />
+    <origin xyz="0.269 0 0.022" rpy="0 0 0" />
+  </joint>
+  <link name="camera_left_frame">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="6.666666666666667e-10" iyy="6.666666666666667e-10" izz="6.666666666666667e-10" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 1.57079633 0" />
+      <geometry>
+        <cylinder radius="0.008" length="0.002" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.01 0.01 0.015 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="camera_left_frame_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="camera_left_frame" />
+    <origin xyz="0.282 0.025 0.022" rpy="0 0 0" />
+  </joint>
+  <link name="camera_left_optical_frame">
+    <inertial>
+      <mass value="0.0001" />
+      <inertia ixx="1.6666666666666667e-11" iyy="1.6666666666666667e-11" izz="1.6666666666666667e-11" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <joint name="camera_left_optical_frame_joint" type="fixed">
+    <parent link="camera_left_frame" />
+    <child link="camera_left_optical_frame" />
+    <origin xyz="0 0 0" rpy="-1.57079633 0 -1.57079633" />
+  </joint>
+  <link name="camera_right_frame">
+    <inertial>
+      <mass value="0.001" />
+      <inertia ixx="6.666666666666667e-10" iyy="6.666666666666667e-10" izz="6.666666666666667e-10" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 1.57079633 0" />
+      <geometry>
+        <cylinder radius="0.008" length="0.002" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.01 0.01 0.015 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="camera_right_frame_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="camera_right_frame" />
+    <origin xyz="0.282 -0.025 0.022" rpy="0 0 0" />
+  </joint>
+  <link name="camera_right_optical_frame">
+    <inertial>
+      <mass value="0.0001" />
+      <inertia ixx="1.6666666666666667e-11" iyy="1.6666666666666667e-11" izz="1.6666666666666667e-11" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+  <joint name="camera_right_optical_frame_joint" type="fixed">
+    <parent link="camera_right_frame" />
+    <child link="camera_right_optical_frame" />
+    <origin xyz="0 0 0" rpy="-1.57079633 0 -1.57079633" />
+  </joint>
+  <link name="lidar_link">
+    <inertial>
+      <mass value="0.12" />
+      <inertia ixx="4.825e-05" iyy="4.825e-05" izz="7.2e-05" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.03" length="0.035" />
+      </geometry>
+      <material name="material_2">
+        <color rgba="0.1 0.1 0.1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.03" length="0.035" />
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 -0.031" rpy="0 0 0" />
+      <geometry>
+        <box size="0.022 0.022 0.027" />
+      </geometry>
+      <material name="material_4">
+        <color rgba="0.3 0.3 0.3 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.031" rpy="0 0 0" />
+      <geometry>
+        <box size="0.022 0.022 0.027" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="lidar_link_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="lidar_link" />
+    <origin xyz="-0.06 0 0.094" rpy="0 0 0" />
+  </joint>
+</robot>

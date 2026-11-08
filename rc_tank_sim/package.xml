@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>rc_tank_sim</name><version>0.2.0</version>
+  <description>HowToMechatronics dual-speed tracked robot, lightweight and compliant-chain simulation.</description>
+  <maintainer email="maintainer@example.com">RC Tank Simulation Maintainer</maintainer>
+  <license>BSD-3-Clause</license>
+  <buildtool_depend>ament_cmake</buildtool_depend><buildtool_depend>ament_cmake_python</buildtool_depend>
+  <depend>rclcpp</depend><depend>std_msgs</depend><depend>geometry_msgs</depend>
+  <depend>gz_sim_vendor</depend><depend>gz_plugin_vendor</depend><depend>gz_transport_vendor</depend><depend>gz_msgs_vendor</depend>
+  <exec_depend>rclpy</exec_depend><exec_depend>python3-tk</exec_depend><exec_depend>rosgraph_msgs</exec_depend><exec_depend>tf2_msgs</exec_depend><exec_depend>robot_state_publisher</exec_depend><exec_depend>ros_gz_sim</exec_depend><exec_depend>ros_gz_bridge</exec_depend>
+  <exec_depend>rviz2</exec_depend><exec_depend>sensor_msgs</exec_depend><exec_depend>nav_msgs</exec_depend><exec_depend>tf2_ros</exec_depend><exec_depend>visualization_msgs</exec_depend>
+  <exec_depend>ament_index_python</exec_depend><exec_depend>launch_ros</exec_depend><exec_depend>launch</exec_depend>
+  <export><build_type>ament_cmake</build_type></export>
+</package>

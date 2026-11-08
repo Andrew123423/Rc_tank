@@ -1,0 +1,42 @@
+[
+  {
+    "source": "Main Body - front (1).stl",
+    "sha256": "a2d841a37815ee9843ef35b2dcb3bde1780b3a196e951d546b277bd93271004b",
+    "input_triangles": 54232,
+    "output": "body_front.stl",
+    "output_triangles": 3700,
+    "units": "metres",
+    "cell_size_m": 0.0035,
+    "visual_only": true
+  },
+  {
+    "source": "Main Body - back (2).stl",
+    "sha256": "abed50848b9462fca2aa7384750cefd19e617842399f69ec827a1cb53818f6e7",
+    "input_triangles": 57600,
+    "output": "body_back.stl",
+    "output_triangles": 3838,
+    "units": "metres",
+    "cell_size_m": 0.0035,
+    "visual_only": true
+  },
+  {
+    "source": "Cover - front.stl",
+    "sha256": "14c1a159ea222fbd23e6998aed36750210d771d5335b1b646579e70b8db0aa4a",
+    "input_triangles": 9516,
+    "output": "cover_front.stl",
+    "output_triangles": 506,
+    "units": "metres",
+    "cell_size_m": 0.0035,
+    "visual_only": true
+  },
+  {
+    "source": "Cover - back.stl",
+    "sha256": "9483a7db28d1199ffdd77111972a1e7b186ef01f2a9162b09fd2dd2ccf194fd4",
+    "input_triangles": 8450,
+    "output": "cover_back.stl",
+    "output_triangles": 595,
+    "units": "metres",
+    "cell_size_m": 0.0035,
+    "visual_only": true
+  }
+]

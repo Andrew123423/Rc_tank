@@ -1,0 +1,7 @@
+{
+  "method": "convex hull of four reduced source STL parts",
+  "input_triangles": 8639,
+  "output_triangles": 104,
+  "units": "metres",
+  "visual_only": true
+}

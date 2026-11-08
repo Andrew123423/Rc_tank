@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+"""Ten-second read-only ROS/Gazebo diagnosis: clock rate, scan and TF."""
+import json,math,time
+import rclpy
+from rclpy.qos import qos_profile_sensor_data
+from rosgraph_msgs.msg import Clock
+from sensor_msgs.msg import LaserScan,JointState
+from nav_msgs.msg import Odometry
+from std_msgs.msg import Float64
+from tf2_ros import Buffer,TransformListener
+
+def main():
+    rclpy.init();node=rclpy.create_node('tank_diagnose');data={};counts={};first={};last={};subscriptions=[]
+    def cb(key):
+        def receive(m):
+            now=time.monotonic();data[key]=m;counts[key]=counts.get(key,0)+1;first.setdefault(key,now);last[key]=now
+            if key=='clock':
+                sim=m.clock.sec+m.clock.nanosec/1e9;first.setdefault('sim',sim);last['sim']=sim
+        return receive
+    for key,cls,topic in [('clock',Clock,'/clock'),('scan',LaserScan,'/scan'),('odom',Odometry,'/odom'),('joints',JointState,'/joint_states'),('closure',Float64,'/tank/closure_error')]:subscriptions.append(node.create_subscription(cls,topic,cb(key),qos_profile_sensor_data))
+    buffer=Buffer();listener=TransformListener(buffer,node);deadline=time.monotonic()+10
+    while rclpy.ok() and time.monotonic()<deadline:rclpy.spin_once(node,timeout_sec=.1)
+    result={'wall_duration_s':10,'received_counts':counts,'wall_rates_hz':{k:round((counts[k]-1)/max(.001,last[k]-first[k]),2) for k in counts if counts[k]>1}}
+    if counts.get('clock',0)>1:result['real_time_factor']=round((last['sim']-first['sim'])/max(.001,last['clock']-first['clock']),3)
+    hints=[]
+    if result['wall_rates_hz'].get('joints',0)>100:hints.append('Слишком высокая частота /joint_states: обновите Gazebo Harmonic, установленная версия могла проигнорировать update_rate=20.')
+    if 'clock' not in data:hints.append('Нет /clock: симулятор не запущен либо мост не работает.')
+    elif result.get('real_time_factor',0)<.5:hints.append('Модельное время идёт медленно: проверьте light-профиль, число окон и GPU; частоты по wall-time будут ниже заданных.')
+    if 'scan' in data:
+        s=data['scan'];finite=[v for v in s.ranges if math.isfinite(v) and s.range_min<=v<=s.range_max]
+        result['lidar']={'frame':s.header.frame_id,'samples':len(s.ranges),'finite_hits':len(finite),'closest_m':min(finite) if finite else None}
+        try:
+            buffer.lookup_transform('odom',s.header.frame_id,rclpy.time.Time());result['lidar']['tf_to_odom']='OK'
+        except Exception as e:result['lidar']['tf_to_odom']=str(e);hints.append('Данные /scan приходят, но нет TF odom→лидар; проверьте robot_state_publisher и мост одометрии.')
+        if not finite:hints.append('Все дальности вне диапазона/Inf: лидар не видит отражателей, либо проблема GPU-рендера. Новая сцена содержит стены на высоте луча.')
+    else:hints.append('Нет /scan: используйте sensors:=true lidar:=true и проверьте GPU. В standalone датчиков нет.')
+    if 'closure' in data:
+        error=data['closure'].data;result['closure_error_m']=error
+        if not math.isfinite(error) or error>.02:hints.append('Подробная гусеница сильно растянута/неустойчива. Остановите detailed и используйте light до настройки физики.')
+    result['hints']=hints;print(json.dumps(result,ensure_ascii=False,indent=2));node.destroy_node();rclpy.shutdown()
+if __name__=='__main__':main()
